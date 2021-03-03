@@ -21,7 +21,9 @@ typedef NS_OPTIONS(int, AspectBlockFlags) {
 };
 typedef struct _AspectBlock {
 	__unused Class isa;
+    // int
 	AspectBlockFlags flags;
+    // 这个字段，加的好， __unused
 	__unused int reserved;
 	void (__unused *invoke)(struct _AspectBlock *block, ...);
 	struct {
