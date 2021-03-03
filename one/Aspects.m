@@ -6,7 +6,6 @@
 //
 
 #import "Aspects.h"
-#import <libkern/OSAtomic.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <os/lock.h>
