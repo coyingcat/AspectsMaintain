@@ -123,13 +123,6 @@ static NSString *const AspectsMessagePrefix = @"aspects_";
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public Aspects API
 
-+ (id<AspectToken>)aspect_hookSelector:(SEL)selector
-                      withOptions:(AspectOptions)options
-                       usingBlock:(id)block
-                            error:(NSError **)error {
-    return aspect_add((id)self, selector, options, block, error);
-}
-
 /// @return A token which allows to later deregister the aspect.
 - (id<AspectToken>)aspect_hookSelector:(SEL)selector
                       withOptions:(AspectOptions)options

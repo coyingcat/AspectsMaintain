@@ -45,20 +45,6 @@ typedef NS_OPTIONS(NSUInteger, AspectOptions) {
  */
 @interface NSObject (Aspects)
 
-/// Adds a block of code before/instead/after the current `selector` for a specific class.
-///
-/// @param block Aspects replicates the type signature of the method being hooked.
-/// The first parameter will be `id<AspectInfo>`, followed by all parameters of the method.
-/// These parameters are optional and will be filled to match the block signature.
-/// You can even use an empty block, or one that simple gets `id<AspectInfo>`.
-///
-/// @note Hooking static methods is not supported.
-/// @return A token which allows to later deregister the aspect.
-+ (id<AspectToken>)aspect_hookSelector:(SEL)selector
-                           withOptions:(AspectOptions)options
-                            usingBlock:(id)block
-                                 error:(NSError **)error;
-
 /// Adds a block of code before/instead/after the current `selector` for a specific instance.
 - (id<AspectToken>)aspect_hookSelector:(SEL)selector
                            withOptions:(AspectOptions)options
