@@ -285,63 +285,6 @@ static void aspect_prepareClassAndHookSelector(NSObject *self, SEL selector, NSE
     }
 }
 
-// Will undo the runtime changes made.
-static void aspect_cleanupHookedClassAndSelector(NSObject *self, SEL selector) {
-    NSCParameterAssert(self);
-    NSCParameterAssert(selector);
-
-	Class klass = object_getClass(self);
-    BOOL isMetaClass = class_isMetaClass(klass);
-    if (isMetaClass) {
-        klass = (Class)self;
-    }
-
-    // Check if the method is marked as forwarded and undo that.
-    Method targetMethod = class_getInstanceMethod(klass, selector);
-    IMP targetMethodIMP = method_getImplementation(targetMethod);
-    if (aspect_isMsgForwardIMP(targetMethodIMP)) {
-        // Restore the original method implementation.
-        const char *typeEncoding = method_getTypeEncoding(targetMethod);
-        SEL aliasSelector = aspect_aliasForSelector(selector);
-        Method originalMethod = class_getInstanceMethod(klass, aliasSelector);
-        IMP originalIMP = method_getImplementation(originalMethod);
-        NSCAssert(originalMethod, @"Original implementation for %@ not found %@ on %@", NSStringFromSelector(selector), NSStringFromSelector(aliasSelector), klass);
-
-        class_replaceMethod(klass, selector, originalIMP, typeEncoding);
-        AspectLog(@"Aspects: Removed hook for -[%@ %@].", klass, NSStringFromSelector(selector));
-    }
-
-    // Deregister global tracked selector
-    aspect_deregisterTrackedSelector(self, selector);
-
-    // Get the aspect container and check if there are any hooks remaining. Clean up if there are not.
-    AspectsContainer *container = aspect_getContainerForObject(self, selector);
-    if (!container.hasAspects) {
-        // Destroy the container
-        aspect_destroyContainerForObject(self, selector);
-
-        // Figure out how the class was modified to undo the changes.
-        NSString *className = NSStringFromClass(klass);
-        if ([className hasSuffix:AspectsSubclassSuffix]) {
-            Class originalClass = NSClassFromString([className stringByReplacingOccurrencesOfString:AspectsSubclassSuffix withString:@""]);
-            NSCAssert(originalClass != nil, @"Original class must exist");
-            object_setClass(self, originalClass);
-            AspectLog(@"Aspects: %@ has been restored.", NSStringFromClass(originalClass));
-
-            // We can only dispose the class pair if we can ensure that no instances exist using our subclass.
-            // Since we don't globally track this, we can't ensure this - but there's also not much overhead in keeping it around.
-            //objc_disposeClassPair(object.class);
-        }else {
-            // Class is most likely swizzled in place. Undo that.
-            if (isMetaClass) {
-                aspect_undoSwizzleClassInPlace((Class)self);
-            }else if (self.class != klass) {
-            	aspect_undoSwizzleClassInPlace(klass);
-            }
-        }
-    }
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Hook Class
 
