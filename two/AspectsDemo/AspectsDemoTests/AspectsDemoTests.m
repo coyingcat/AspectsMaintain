@@ -537,7 +537,7 @@
     TestClass *testClass = [TestClass new];
 
     __block BOOL testCallCalled = NO;
-    id aspectToken = [testClass aspect_hookSelector:@selector(testCall) withOptions:AspectPositionAfter|AspectOptionAutomaticRemoval usingBlock:^(id<AspectInfo> info) {
+    id aspectToken = [testClass aspect_hookSelector:@selector(testCall) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> info) {
         testCallCalled = YES;
     } error:NULL];
 

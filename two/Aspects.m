@@ -487,9 +487,6 @@ static void aspect_undoSwizzleClassInPlace(Class klass) {
 #define aspect_invoke(aspects, info) \
 for (AspectIdentifier *aspect in aspects) {\
     [aspect invokeWithInfo:info];\
-    if (aspect.options & AspectOptionAutomaticRemoval) { \
-        aspectsToRemove = [aspectsToRemove?:@[] arrayByAddingObject:aspect]; \
-    } \
 }
 
 // This is the swizzled forwardInvocation: method.
