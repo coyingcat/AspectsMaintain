@@ -16,10 +16,6 @@ typedef NS_OPTIONS(NSUInteger, AspectOptions) {
 /// Opaque Aspect Token that allows to deregister the hook.
 @protocol AspectToken <NSObject>
 
-/// Deregisters an aspect.
-/// @return YES if deregistration is successful, otherwise NO.
-- (BOOL)remove;
-
 @end
 
 /// The AspectInfo protocol is the first parameter of our block syntax.

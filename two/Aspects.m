@@ -499,7 +499,6 @@ static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL
     AspectsContainer *objectContainer = objc_getAssociatedObject(self, aliasSelector);
     AspectsContainer *classContainer = aspect_getContainerForClass(object_getClass(self), aliasSelector);
     AspectInfo *info = [[AspectInfo alloc] initWithInstance:self invocation:invocation];
-    NSArray *aspectsToRemove = nil;
 
     // Before hooks.
     aspect_invoke(classContainer.beforeAspects, info);
@@ -534,9 +533,6 @@ static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL
             [self doesNotRecognizeSelector:invocation.selector];
         }
     }
-
-    // Remove any hooks that are queued for deregistration.
-    [aspectsToRemove makeObjectsPerformSelector:@selector(remove)];
 }
 #undef aspect_invoke
 
@@ -887,10 +883,6 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: %p, SEL:%@ object:%@ options:%tu block:%@ (#%tu args)>", self.class, self, NSStringFromSelector(self.selector), self.object, self.options, self.block, self.blockSignature.numberOfArguments];
-}
-
-- (BOOL)remove {
-    return aspect_remove(self, NULL);
 }
 
 @end

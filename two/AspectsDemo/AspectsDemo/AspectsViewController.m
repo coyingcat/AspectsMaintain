@@ -11,6 +11,25 @@
 
 @implementation AspectsViewController
 
+
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
+//    [self aspect_hookSelector:@selector(viewWillLayoutSubviews) withOptions:0 usingBlock:^{
+//        NSLog(@"haahahahaha   Controller is layouting!");
+//    } error:NULL];
+}
+
+
+
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    // called twice
+    NSLog(@"11 111  11");
+}
+
+
+
 - (IBAction)buttonPressed:(id)sender {
     UIViewController *testController = [[UIImagePickerController alloc] init];
 
