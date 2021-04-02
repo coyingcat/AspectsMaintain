@@ -156,30 +156,6 @@ static id aspect_add(id self, SEL selector, AspectOptions options, id block, NSE
     return identifier;
 }
 
-static BOOL aspect_remove(AspectIdentifier *aspect, NSError **errorX) {
-    NSCAssert([aspect isKindOfClass:AspectIdentifier.class], @"Must have correct type.");
-
-    __block BOOL success = NO;
-    __block NSError * __autoreleasing * error = errorX;
-    aspect_performLocked(^{
-        id self = aspect.object; // strongify
-        if (self) {
-            AspectsContainer *aspectContainer = aspect_getContainerForObject(self, aspect.selector);
-            success = [aspectContainer removeAspect:aspect];
-
-            aspect_cleanupHookedClassAndSelector(self, aspect.selector);
-            // destroy token
-            aspect.object = nil;
-            aspect.block = nil;
-            aspect.selector = NULL;
-        }else {
-            NSString *errrorDesc = [NSString stringWithFormat:@"Unable to deregister hook. Object already deallocated: %@", aspect];
-            AspectError(AspectErrorRemoveObjectAlreadyDeallocated, errrorDesc);
-        }
-    });
-    return success;
-}
-
 static void aspect_performLocked(dispatch_block_t block) {
     static os_unfair_lock lock = OS_UNFAIR_LOCK_INIT;
     os_unfair_lock_lock(&lock);
