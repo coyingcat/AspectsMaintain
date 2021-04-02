@@ -118,12 +118,6 @@ Another convenient use case is adding handlers for classes that you don't own. I
 @end
 ```
 
-Debugging
----------
-Aspects identifies itself nicely in the stack trace, so it's easy to see if a method has been hooked:
-
-<img src="https://raw.githubusercontent.com/steipete/Aspects/master/stacktrace@2x.png?token=58493__eyJzY29wZSI6IlJhd0Jsb2I6c3RlaXBldGUvQXNwZWN0cy9tYXN0ZXIvc3RhY2t0cmFjZUAyeC5wbmciLCJleHBpcmVzIjoxMzk5NzQ3OTI3fQ%3D%3D--97cf7e7bac491149eb8db3d1b9a562ab88154a3c" width="75%">
-
 Using Aspects with non-void return types
 ----------------------------------------
 
@@ -161,7 +155,10 @@ KVO works if observers are created after your calls `aspect_hookSelector:` It mo
 
 Because of ugly implementation details on the ObjC runtime, methods that return unions that also contain structs might not work correctly unless this code runs on the arm64 runtime.
 
-Credits
--------
+
+
+##### PS:
+
+
 The idea to use `_objc_msgForward` and parts of the `NSInvocation` argument selection is from the excellent [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) from the GitHub guys. [This article](http://codeshaker.blogspot.co.at/2012/01/aop-delivered.html) explains how it works under the hood.
 
