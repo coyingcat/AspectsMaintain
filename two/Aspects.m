@@ -387,18 +387,6 @@ static Class aspect_swizzleClassInPlace(Class klass) {
     return klass;
 }
 
-static void aspect_undoSwizzleClassInPlace(Class klass) {
-    NSCParameterAssert(klass);
-    NSString *className = NSStringFromClass(klass);
-
-    _aspect_modifySwizzledClasses(^(NSMutableSet *swizzledClasses) {
-        if ([swizzledClasses containsObject:className]) {
-            aspect_undoSwizzleForwardInvocation(klass);
-            [swizzledClasses removeObject:className];
-        }
-    });
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Aspect Invoke Point
 
@@ -481,11 +469,6 @@ static AspectsContainer *aspect_getContainerForClass(Class klass, SEL selector) 
     return classContainer;
 }
 
-static void aspect_destroyContainerForObject(id<NSObject> self, SEL selector) {
-    NSCParameterAssert(self);
-    SEL aliasSelector = aspect_aliasForSelector(selector);
-    objc_setAssociatedObject(self, aliasSelector, nil, OBJC_ASSOCIATION_RETAIN);
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Selector Blacklist Checking
@@ -579,27 +562,6 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
 	}
 
     return YES;
-}
-
-static void aspect_deregisterTrackedSelector(id self, SEL selector) {
-    if (!class_isMetaClass(object_getClass(self))) return;
-
-    NSMutableDictionary *swizzledClassesDict = aspect_getSwizzledClassesDict();
-    NSString *selectorName = NSStringFromSelector(selector);
-    Class currentClass = [self class];
-    AspectTracker *subclassTracker = nil;
-    do {
-        AspectTracker *tracker = swizzledClassesDict[currentClass];
-        if (subclassTracker) {
-            [tracker removeSubclassTracker:subclassTracker hookingSelectorName:selectorName];
-        } else {
-            [tracker.selectorNames removeObject:selectorName];
-        }
-        if (tracker.selectorNames.count == 0 && tracker.selectorNamesToSubclassTrackers) {
-            [swizzledClassesDict removeObjectForKey:currentClass];
-        }
-        subclassTracker = tracker;
-    }while ((currentClass = class_getSuperclass(currentClass)));
 }
 
 @end
