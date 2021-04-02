@@ -1,8 +1,3 @@
-Aspects v1.4.2 [![Build Status](https://travis-ci.org/steipete/Aspects.svg?branch=master)](https://travis-ci.org/steipete/Aspects) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-==============
-
-A delightful, simple library for aspect oriented programming by [@steipete](http://twitter.com/steipete).
-
 **Think of Aspects as method swizzling on steroids. It allows you to add code to existing methods per class or per instance**, whilst thinking of the insertion point e.g. before/instead/after. Aspects automatically deals with calling super and is easier to use than regular method swizzling.
 
 Aspects hooks deep into the class hierarchy and creates dynamic subclasses, much like KVO. There's known issues with this approach, and to this date (February 2019) **I STRICTLY DO NOT RECOMMEND TO USE Aspects IN PRODUCTION CODE**. We use it for partial test mocks in, [PSPDFKit, an iOS PDF framework that ships with apps like Dropbox or Evernote](http://pspdfkit.com), it's also very useful for quickly hacking something up.
@@ -225,11 +220,3 @@ Version 1.1.0
 - The original implementation of forwardInvocation is now correctly preserved.
 - Classes are properly cleaned up and restored to the original state after the last hook is deregistered.
 - Lots and lots of new test cases!
-
-Version 1.0.1
-
-- Minor tweaks and documentation improvements.
-
-Version 1.0.0
-
-- Initial release

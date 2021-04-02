@@ -24,6 +24,7 @@
 }
 
 - (void)baz {
+    //  return;
     // hang 住
     while (true) {
         ;

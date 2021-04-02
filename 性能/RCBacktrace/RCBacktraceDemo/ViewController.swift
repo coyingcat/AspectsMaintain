@@ -58,6 +58,7 @@ class ViewController: UIViewController {
 
     // hang 住
     func baz() {
+        //  return
         while true {
 
         }
