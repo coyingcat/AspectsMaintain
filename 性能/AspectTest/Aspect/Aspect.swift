@@ -35,10 +35,6 @@ private enum Constants {
     static let forwardInvocationSelectorName = "__aspect_forwardInvocation:"
 }
 
-public enum AspectStrategy {
-    case instead          /// Will replace the original implementation.
-}
-
 public class AspectInfo: NSObject {
 
     let instance: AnyObject
@@ -55,16 +51,8 @@ internal class AspectsCache {
 
     var insteadAspects = [AspectIdentifier]()
 
-    func add(_ aspect: AspectIdentifier, option: AspectStrategy) {
-        switch option {
-        case .instead:
-            insteadAspects.append(aspect)
-        }
-    }
-
-    // TODO: remove aspect.
-    func remove(_ aspect: AspectIdentifier) {
-
+    func add(_ aspect: AspectIdentifier) {
+        insteadAspects.append(aspect)
     }
 
     func hasAspects() -> Bool {
@@ -82,8 +70,8 @@ extension NSObject {
     ///   - strategy: The hook strategy, `.before` by default.
     ///   - block: The hook block.
     ///   - returns: AspectToken, you can use it to remove hook.
-    public class func hook(selector: Selector, strategy: AspectStrategy, block: AnyObject) throws -> AspectToken {
-        return try ahook(object: self, selector: selector, strategy: strategy, block: block)
+    public class func hook(selector: Selector, block: AnyObject) throws -> AspectToken {
+        return try ahook(object: self, selector: selector, block: block)
     }
 }
 
@@ -97,17 +85,17 @@ extension NSObject {
     ///   - block: The hook block.
     ///
     ///   - returns: AspectToken, you can use it to remove hook.
-    public func hook(selector: Selector, strategy: AspectStrategy = .instead, block: AnyObject) throws -> AspectToken {
-        return try ahook(object: self, selector: selector, strategy: strategy, block: block)
+    public func hook(selector: Selector, block: AnyObject) throws -> AspectToken {
+        return try ahook(object: self, selector: selector, block: block)
     }
 }
 
-func ahook(object: AnyObject, selector: Selector, strategy: AspectStrategy, block: AnyObject) throws -> AspectToken {
+func ahook(object: AnyObject, selector: Selector, block: AnyObject) throws -> AspectToken {
     return try lock.performLocked {
-        let identifier = try AspectIdentifier.identifier(with: selector, object: object, strategy: strategy, block: block)
+        let identifier = try AspectIdentifier.identifier(with: selector, object: object, block: block)
 
         let cache = getAspectCache(for: object, selector: selector)
-        cache.add(identifier, option: strategy)
+        cache.add(identifier)
 
         let subclass: AnyClass = try hookClass(object: object, selector: selector)
         let method = class_getInstanceMethod(subclass, selector) ?? class_getClassMethod(subclass, selector)
@@ -249,16 +237,6 @@ func getAspectCache(for object: AnyObject, selector: Selector) -> AspectsCache {
     }
 
     return aspectCache!
-}
-
-// TODO: remove aspect.
-func remove(_ aspect: AspectIdentifier) {
-    return lock.performLocked {
-        guard let object = aspect.object else { return }
-
-        let aspectCache = getAspectCache(for: object, selector: aspect.selector)
-        aspectCache.remove(aspect)
-    }
 }
 
 extension Collection where Iterator.Element == AspectIdentifier {

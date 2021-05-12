@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         
         
 
-        _ = try? hook(selector: #selector(ViewController.test(id:name:)), strategy: .instead) { (_, id: Int, name: String) in
+        _ = try? hook(selector: #selector(ViewController.test(id:name:))) { (_, id: Int, name: String) in
             print("ha ha ha")
         }
 

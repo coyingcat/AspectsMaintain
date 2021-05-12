@@ -25,29 +25,20 @@
 
 import Foundation
 
-public protocol AspectToken {
-    func remove()
-}
+public protocol AspectToken {}
 
-extension AspectIdentifier: AspectToken {
-
-    public func remove() {
-        Aspect.remove(self)
-    }
-}
+extension AspectIdentifier: AspectToken {}
 
 internal struct AspectIdentifier {
 
     let selector: Selector
     weak var object: AnyObject?
-    let strategy: AspectStrategy
     let block: AnyObject
     var blockSignature: AnyObject?
 
-    init(selector: Selector, object: AnyObject, strategy: AspectStrategy, block: AnyObject) {
+    init(selector: Selector, object: AnyObject, block: AnyObject) {
         self.selector = selector
         self.object = object
-        self.strategy = strategy
         self.block = block
     }
 
@@ -68,14 +59,14 @@ internal struct AspectIdentifier {
     ///   - object: The object/class.
     ///   - strategy: The hook strategy.
     ///   - block: The hook strategy.
-    static func identifier(with selector: Selector, object: AnyObject, strategy: AspectStrategy, block: AnyObject) throws -> AspectIdentifier {
+    static func identifier(with selector: Selector, object: AnyObject, block: AnyObject) throws -> AspectIdentifier {
         guard let blockSignature = AspectBlock(block).blockSignature else {
             throw AspectError.missingBlockSignature
         }
 
         do {
             try isCompatibleBlockSignature(blockSignature: blockSignature, object: object, selector: selector)
-            var aspectIdentifier = AspectIdentifier(selector: selector, object: object, strategy: strategy, block: block)
+            var aspectIdentifier = AspectIdentifier(selector: selector, object: object, block: block)
             aspectIdentifier.blockSignature = blockSignature
             return aspectIdentifier
         } catch {

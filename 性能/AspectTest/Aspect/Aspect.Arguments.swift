@@ -30,7 +30,6 @@ public extension NSObject {
     @discardableResult
     func hook(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -38,13 +37,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     func hook<Arg1>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -52,13 +50,12 @@ public extension NSObject {
                 let arg1 = aspectInfo.arguments[0] as? Arg1 else { return }
             block(aspectInfo, arg1)
         }
-        return try hook(selector: selector, strategy: strategy, block: wrappedBlock)
+        return try hook(selector: selector, block: wrappedBlock)
     }
 
     @discardableResult
     func hook<Arg1, Arg2>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -69,13 +66,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     func hook<Arg1, Arg2, Arg3>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -87,13 +83,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -106,13 +101,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4, Arg5>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -128,13 +122,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -151,13 +144,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -175,7 +167,7 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 }
 
@@ -183,7 +175,6 @@ public extension NSObject {
     @discardableResult
     class func hook(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -191,13 +182,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     class func hook<Arg1>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -207,13 +197,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     class func hook<Arg1, Arg2>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -224,13 +213,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     class func hook<Arg1, Arg2, Arg3>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -242,13 +230,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -261,13 +248,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4, Arg5>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -283,13 +269,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -306,13 +291,12 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(
         selector: Selector,
-        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -330,6 +314,6 @@ public extension NSObject {
         }
 
         let wrappedObject: AnyObject = unsafeBitCast(wrappedBlock, to: AnyObject.self)
-        return try hook(selector: selector, strategy: strategy, block: wrappedObject)
+        return try hook(selector: selector, block: wrappedObject)
     }
 }
