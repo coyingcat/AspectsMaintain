@@ -38,7 +38,6 @@ private enum Constants {
 public enum AspectStrategy {
     case after            /// Called after the original implementation (default)
     case instead          /// Will replace the original implementation.
-    case before           /// Called before the original implementation.
 }
 
 public class AspectInfo: NSObject {
@@ -55,14 +54,11 @@ public class AspectInfo: NSObject {
 
 internal class AspectsCache {
 
-    var beforeAspects: [AspectIdentifier] = []
-    var insteadAspects: [AspectIdentifier] = []
-    var afterAspects: [AspectIdentifier] = []
+    var insteadAspects = [AspectIdentifier]()
+    var afterAspects = [AspectIdentifier]()
 
     func add(_ aspect: AspectIdentifier, option: AspectStrategy) {
         switch option {
-        case .before:
-            beforeAspects.append(aspect)
         case .instead:
             insteadAspects.append(aspect)
         case .after:
@@ -76,7 +72,22 @@ internal class AspectsCache {
     }
 
     func hasAspects() -> Bool {
-        return !(beforeAspects.isEmpty && insteadAspects.isEmpty && afterAspects.isEmpty)
+        return !(insteadAspects.isEmpty && afterAspects.isEmpty)
+    }
+}
+
+
+extension NSObject {
+
+    /// Hook an object selector.
+    ///
+    /// - Parameters:
+    ///   - selector: The selector need to hook.
+    ///   - strategy: The hook strategy, `.before` by default.
+    ///   - block: The hook block.
+    ///   - returns: AspectToken, you can use it to remove hook.
+    public class func hook(selector: Selector, strategy: AspectStrategy, block: AnyObject) throws -> AspectToken {
+        return try ahook(object: self, selector: selector, strategy: strategy, block: block)
     }
 }
 
@@ -90,7 +101,7 @@ extension NSObject {
     ///   - block: The hook block.
     ///
     ///   - returns: AspectToken, you can use it to remove hook.
-    public func hook(selector: Selector, strategy: AspectStrategy = .before, block: AnyObject) throws -> AspectToken {
+    public func hook(selector: Selector, strategy: AspectStrategy = .instead, block: AnyObject) throws -> AspectToken {
         return try ahook(object: self, selector: selector, strategy: strategy, block: block)
     }
 }
@@ -197,15 +208,13 @@ private let aspectForwardInvocation: @convention(block) (Unmanaged<NSObject>, An
 
     var info = AspectInfo(instance: object, invocation: invocation)
 
-    // Before hooks.
-    aspectCache.beforeAspects.invoke(with: &info)
-
-    if !aspectCache.insteadAspects.isEmpty {
+    if aspectCache.insteadAspects.isEmpty {
         // Instead hooks
-        aspectCache.insteadAspects.invoke(with: &info)
-    } else {
         invocation.setSelector(aliasSelector)
         invocation.invoke()
+    } else {
+        
+        aspectCache.insteadAspects.invoke(with: &info)
     }
 
     // After hooks.

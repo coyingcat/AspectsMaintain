@@ -30,7 +30,7 @@ public extension NSObject {
     @discardableResult
     func hook(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -44,7 +44,7 @@ public extension NSObject {
     @discardableResult
     func hook<Arg1>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -58,7 +58,7 @@ public extension NSObject {
     @discardableResult
     func hook<Arg1, Arg2>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -75,7 +75,7 @@ public extension NSObject {
     @discardableResult
     func hook<Arg1, Arg2, Arg3>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -93,7 +93,7 @@ public extension NSObject {
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -112,7 +112,7 @@ public extension NSObject {
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4, Arg5>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -134,7 +134,7 @@ public extension NSObject {
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -157,7 +157,7 @@ public extension NSObject {
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -183,7 +183,7 @@ public extension NSObject {
     @discardableResult
     class func hook(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -197,7 +197,7 @@ public extension NSObject {
     @discardableResult
     class func hook<Arg1>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -213,7 +213,7 @@ public extension NSObject {
     @discardableResult
     class func hook<Arg1, Arg2>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -230,7 +230,7 @@ public extension NSObject {
     @discardableResult
     class func hook<Arg1, Arg2, Arg3>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -248,7 +248,7 @@ public extension NSObject {
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -267,7 +267,7 @@ public extension NSObject {
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4, Arg5>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -289,7 +289,7 @@ public extension NSObject {
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
@@ -312,7 +312,7 @@ public extension NSObject {
     @discardableResult
     class func hook<Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(
         selector: Selector,
-        strategy: AspectStrategy = .before,
+        strategy: AspectStrategy = .instead,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
