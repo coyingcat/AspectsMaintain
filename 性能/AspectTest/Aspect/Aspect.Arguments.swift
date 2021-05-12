@@ -70,7 +70,7 @@ public extension NSObject {
     }
 
     @discardableResult
-    func hook<Arg1, Arg2, Arg3>(
+    func hookTrois<Arg1, Arg2, Arg3>(
         selector: Selector,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3) -> Void) throws -> AspectToken
     {
@@ -171,6 +171,19 @@ public extension NSObject {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 public extension NSObject {
     @discardableResult
     class func hook(
@@ -201,7 +214,7 @@ public extension NSObject {
     }
 
     @discardableResult
-    class func hook<Arg1, Arg2>(
+    class func hookDeux<Arg1, Arg2>(
         selector: Selector,
         block: @escaping(AspectInfo, Arg1, Arg2) -> Void) throws -> AspectToken
     {

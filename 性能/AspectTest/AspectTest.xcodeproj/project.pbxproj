@@ -22,10 +22,10 @@
 		26748E22264B8831004D1651 /* NSObject.Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26748E18264B8831004D1651 /* NSObject.Association.swift */; };
 		26748E23264B8831004D1651 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26748E19264B8831004D1651 /* Lock.swift */; };
 		26748E24264B8831004D1651 /* Aspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26748E1A264B8831004D1651 /* Aspect.swift */; };
-		26748E25264B8831004D1651 /* Aspect.Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26748E1B264B8831004D1651 /* Aspect.Arguments.swift */; };
 		26748E26264B8831004D1651 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26748E1C264B8831004D1651 /* Runtime.swift */; };
 		26748E27264B8831004D1651 /* AspectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26748E1D264B8831004D1651 /* AspectError.swift */; };
 		26748E28264B8831004D1651 /* AspectBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26748E1E264B8831004D1651 /* AspectBlock.swift */; };
+		26D63283264BBBEF00610850 /* Aspect.Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D63282264BBBEF00610850 /* Aspect.Arguments.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,10 +70,10 @@
 		26748E18264B8831004D1651 /* NSObject.Association.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObject.Association.swift; sourceTree = "<group>"; };
 		26748E19264B8831004D1651 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		26748E1A264B8831004D1651 /* Aspect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aspect.swift; sourceTree = "<group>"; };
-		26748E1B264B8831004D1651 /* Aspect.Arguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aspect.Arguments.swift; sourceTree = "<group>"; };
 		26748E1C264B8831004D1651 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		26748E1D264B8831004D1651 /* AspectError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AspectError.swift; sourceTree = "<group>"; };
 		26748E1E264B8831004D1651 /* AspectBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AspectBlock.swift; sourceTree = "<group>"; };
+		26D63282264BBBEF00610850 /* Aspect.Arguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aspect.Arguments.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +130,7 @@
 		26748DF5264B87B9004D1651 /* Aspect */ = {
 			isa = PBXGroup;
 			children = (
-				26748E1B264B8831004D1651 /* Aspect.Arguments.swift */,
+				26D63282264BBBEF00610850 /* Aspect.Arguments.swift */,
 				26748E1A264B8831004D1651 /* Aspect.swift */,
 				26748E1E264B8831004D1651 /* AspectBlock.swift */,
 				26748E1D264B8831004D1651 /* AspectError.swift */,
@@ -286,7 +286,7 @@
 				26748E23264B8831004D1651 /* Lock.swift in Sources */,
 				26748E20264B8831004D1651 /* ObjCRuntimeAliases.m in Sources */,
 				26748E27264B8831004D1651 /* AspectError.swift in Sources */,
-				26748E25264B8831004D1651 /* Aspect.Arguments.swift in Sources */,
+				26D63283264BBBEF00610850 /* Aspect.Arguments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
