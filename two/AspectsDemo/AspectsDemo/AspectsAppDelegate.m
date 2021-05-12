@@ -19,8 +19,7 @@
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:aspectsController];
     [self.window makeKeyAndVisible];
 
-    // Ignore hooks when we are testing.
-    if (!NSClassFromString(@"XCTestCase")) {
+  
         [aspectsController aspect_hookSelector:@selector(buttonPressed:) withOptions:0 usingBlock:^(id info, id sender) {
             NSLog(@"Button was pressed by: %@", sender);
         } error:NULL];
@@ -28,7 +27,7 @@
         [aspectsController aspect_hookSelector:@selector(viewWillLayoutSubviews) withOptions:0 usingBlock:^{
             NSLog(@"Controller is layouting!");
         } error:NULL];
-    }
+    
 
     return YES;
 }
