@@ -2,11 +2,10 @@
 //  Aspect.h
 //  Aspect
 //
-//  Created by roy.cao on 2019/5/18.
-//  Copyright © 2019 roy. All rights reserved.
+//  Created by Jz D on 2021/5/12.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for Aspect.
 FOUNDATION_EXPORT double AspectVersionNumber;
