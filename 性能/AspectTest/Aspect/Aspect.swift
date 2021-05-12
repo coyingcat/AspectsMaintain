@@ -36,7 +36,6 @@ private enum Constants {
 }
 
 public enum AspectStrategy {
-    case after            /// Called after the original implementation (default)
     case instead          /// Will replace the original implementation.
 }
 
@@ -55,14 +54,11 @@ public class AspectInfo: NSObject {
 internal class AspectsCache {
 
     var insteadAspects = [AspectIdentifier]()
-    var afterAspects = [AspectIdentifier]()
 
     func add(_ aspect: AspectIdentifier, option: AspectStrategy) {
         switch option {
         case .instead:
             insteadAspects.append(aspect)
-        case .after:
-            afterAspects.append(aspect)
         }
     }
 
@@ -72,7 +68,7 @@ internal class AspectsCache {
     }
 
     func hasAspects() -> Bool {
-        return !(insteadAspects.isEmpty && afterAspects.isEmpty)
+        return !(insteadAspects.isEmpty)
     }
 }
 
@@ -213,12 +209,8 @@ private let aspectForwardInvocation: @convention(block) (Unmanaged<NSObject>, An
         invocation.setSelector(aliasSelector)
         invocation.invoke()
     } else {
-        
         aspectCache.insteadAspects.invoke(with: &info)
     }
-
-    // After hooks.
-    aspectCache.afterAspects.invoke(with: &info)
 }
 
 private func replaceGetClass(in class: AnyClass, decoy perceivedClass: AnyClass) {
