@@ -95,20 +95,6 @@ extension NSObject {
     }
 }
 
-extension NSObject {
-
-    /// Hook an object selector.
-    ///
-    /// - Parameters:
-    ///   - selector: The selector need to hook.
-    ///   - strategy: The hook strategy, `.before` by default.
-    ///   - block: The hook block.
-    ///   - returns: AspectToken, you can use it to remove hook.
-    public class func hook(selector: Selector, strategy: AspectStrategy, block: AnyObject) throws -> AspectToken {
-        return try ahook(object: self, selector: selector, strategy: strategy, block: block)
-    }
-}
-
 func ahook(object: AnyObject, selector: Selector, strategy: AspectStrategy, block: AnyObject) throws -> AspectToken {
     return try lock.performLocked {
         let identifier = try AspectIdentifier.identifier(with: selector, object: object, strategy: strategy, block: block)
