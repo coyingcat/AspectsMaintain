@@ -142,10 +142,14 @@ static id aspect_add(id self, SEL selector, AspectOptions options, id block, NSE
     __block AspectIdentifier *identifier = nil;
     __block NSError * __autoreleasing * errorX = error;
     aspect_performLocked(^{
+        // 先判断
         if (aspect_isSelectorAllowedAndTrack(self, selector, options, errorX)) {
+            // 1 步
             AspectsContainer *aspectContainer = aspect_getContainerForObject(self, selector);
+            // 2 步
             identifier = [AspectIdentifier identifierWithSelector:selector object:self options:options block:block error: errorX];
             if (identifier) {
+                // 3 步
                 [aspectContainer addAspect:identifier withOptions:options];
 
                 // Modify the class to allow message interception.
@@ -547,6 +551,8 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
             subclassTracker = tracker;
         }while ((currentClass = class_getSuperclass(currentClass)));
 	} else {
+        
+        // not if (class_isMetaClass(object_getClass(self))) {
 		return YES;
 	}
 
