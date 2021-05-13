@@ -69,12 +69,25 @@ public extension NSObject {
         return try hook(selector: selector, block: wrappedObject)
     }
 
+
+
+
+
     @discardableResult
     func hookTrois<Arg1, Arg2, Arg3>(
         selector: Selector,
         block: @escaping(AspectInfo, Arg1, Arg2, Arg3) -> Void) throws -> AspectToken
     {
         let wrappedBlock: @convention(block) (AspectInfo) -> Void = { aspectInfo in
+            
+            
+            //  originalInvocation.methodSignature.numberOfArguments
+            
+            
+            //  - (BOOL)invokeWithInfo:(id<AspectInfo>)info
+            
+            
+            
             guard aspectInfo.arguments.count == 3,
                 let arg1 = aspectInfo.arguments[0] as? Arg1,
                 let arg2 = aspectInfo.arguments[1] as? Arg2,
@@ -86,6 +99,11 @@ public extension NSObject {
         return try hook(selector: selector, block: wrappedObject)
     }
 
+    
+    
+    
+    
+    
     @discardableResult
     func hook<Arg1, Arg2, Arg3, Arg4>(
         selector: Selector,
