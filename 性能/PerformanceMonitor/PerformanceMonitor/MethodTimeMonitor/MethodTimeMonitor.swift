@@ -600,7 +600,8 @@ extension MethodTimeMonitor {
         guard let classes = objc_copyClassList(&nc) else {
             return stopped
         }
-
+        print("开始了: --- ")
+        print("Int(nc): ", Int(nc))
         for aClass in (0..<Int(nc)).map({ classes[$0] }) {
             callback(aClass, &stopped)
             if stopped {

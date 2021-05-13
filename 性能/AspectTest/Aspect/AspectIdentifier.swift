@@ -60,7 +60,7 @@ internal struct AspectIdentifier {
     ///   - strategy: The hook strategy.
     ///   - block: The hook strategy.
     static func identifier(with selector: Selector, object: AnyObject, block: AnyObject) throws -> AspectIdentifier {
-        guard let blockSignature = AspectBlock(block).blockSignature else {
+        guard let blockSignature = AspectBlock(x: block).blockSignature else {
             throw AspectError.missingBlockSignature
         }
 

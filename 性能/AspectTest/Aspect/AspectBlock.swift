@@ -12,7 +12,7 @@ internal class AspectBlock {
 
     private let block: AnyObject
 
-    init(_ block: AnyObject) {
+    init(x block: AnyObject) {
         self.block = block
     }
 
