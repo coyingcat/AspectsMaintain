@@ -47,6 +47,12 @@ public class AspectInfo: NSObject {
     }
 }
 
+
+// AspectsContainer
+
+// 关联对象，保存起来
+
+// 里面放 AspectIdentifier
 internal class AspectsCache {
 
     var insteadAspects = [AspectIdentifier]()
