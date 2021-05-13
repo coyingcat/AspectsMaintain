@@ -55,8 +55,8 @@ internal class AspectsCache {
         insteadAspects.append(aspect)
     }
 
-    func hasAspects() -> Bool {
-        return !(insteadAspects.isEmpty)
+    var hasAspects: Bool{
+        !(insteadAspects.isEmpty)
     }
 }
 
