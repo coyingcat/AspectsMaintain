@@ -482,7 +482,7 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
         disallowedSelectorList = [NSSet setWithObjects:@"retain", @"release", @"autorelease", @"forwardInvocation:", nil];
     });
 
-    // Check against the blacklist.
+    // Check against the blacklist 黑名单
     NSString *selectorName = NSStringFromSelector(selector);
     if ([disallowedSelectorList containsObject:selectorName]) {
         NSString *errorDescription = [NSString stringWithFormat:@"Selector %@ is blacklisted.", selectorName];
