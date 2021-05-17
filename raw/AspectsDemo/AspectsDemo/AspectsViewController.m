@@ -11,6 +11,13 @@
 
 @implementation AspectsViewController
 
+
+
+
+
+
+
+
 - (IBAction)buttonPressed:(id)sender {
     UIViewController *testController = [[UIImagePickerController alloc] init];
 
@@ -29,6 +36,30 @@
     [testController aspect_hookSelector:NSSelectorFromString(@"dealloc") withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> info) {
         NSLog(@"Controller is about to be deallocated: %@", [info instance]);
     } error:NULL];
+    
+    
+    
+    [self test];
 }
+
+
+
+
+
+
+- (void) test{
+    
+    void(^testBlock)(void) = ^{
+        NSLog(@"hello 去   挑战");
+    };
+    
+    
+    
+  //  struct
+    
+}
+
+
+
 
 @end
