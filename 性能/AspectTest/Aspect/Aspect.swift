@@ -53,6 +53,10 @@ public class AspectInfo: NSObject {
 // 关联对象，保存起来
 
 // 里面放 AspectIdentifier
+
+
+// 锁保护， lock
+
 internal class AspectsCache {
 
     var insteadAspects = [AspectIdentifier]()
