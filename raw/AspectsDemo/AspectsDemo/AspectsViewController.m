@@ -58,7 +58,11 @@
     };
     
     
-    
+    // 编译时期，_AspectBlock 的内存结构
+    // 与
+    // void(^testBlock)(void) 的内存结构，
+    // 是可以
+    // 一一对应得上的
     struct _AspectBlock *oneBlock = (struct _AspectBlock *)(__bridge  void *)testBlock;
     
     oneBlock->invoke(oneBlock);
@@ -68,4 +72,23 @@
 
 
 
+
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
