@@ -13,7 +13,11 @@
 
 
 
-
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    
+    [self test];
+}
 
 
 
@@ -39,7 +43,7 @@
     
     
     
-    [self test];
+    
 }
 
 
@@ -55,8 +59,10 @@
     
     
     
-  //  struct
+    struct _AspectBlock *oneBlock = (struct _AspectBlock *)(__bridge  void *)testBlock;
     
+    oneBlock->invoke(oneBlock);
+    // testBlock();
 }
 
 
