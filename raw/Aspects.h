@@ -87,7 +87,11 @@ extern NSString *const AspectErrorDomain;
 
 // Block internals.
 typedef NS_OPTIONS(int, AspectBlockFlags) {
+    
+    // 捕获外界变量
     AspectBlockFlagsHasCopyDisposeHelpers = (1 << 25),
+    
+    // block has sign
     AspectBlockFlagsHasSignature          = (1 << 30)
 };
 

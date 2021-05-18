@@ -159,6 +159,8 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
     }
 	void *desc = layout->descriptor;
 	desc += 2 * sizeof(unsigned long int);
+    
+    // 如果，捕获外界变量
 	if (layout->flags & AspectBlockFlagsHasCopyDisposeHelpers) {
 		desc += 2 * sizeof(void *);
     }
