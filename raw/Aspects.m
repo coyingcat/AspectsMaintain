@@ -376,7 +376,18 @@ static void aspect_cleanupHookedClassAndSelector(NSObject *self, SEL selector) {
 
 static Class aspect_hookClass(NSObject *self, NSError **error) {
     NSCParameterAssert(self);
+    
+    // 获取当前，类对象
+    
+    // self.class
+    // 对象 -> 类， 类对象
+    
+    // 类， 类对象 -> 自身
+    
+    
 	Class statedClass = self.class;
+    
+    // object_getClass， isa 指针
 	Class baseClass = object_getClass(self);
 	NSString *className = NSStringFromClass(baseClass);
 
@@ -601,7 +612,7 @@ static NSMutableDictionary *aspect_getSwizzledClassesDict() {
 
 
 // dealloc 配合 after 策略选项，
-// 似乎没有意义
+// 这个 Hook, 似乎没有意义
 
 
 static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, AspectOptions options, NSError **error) {
