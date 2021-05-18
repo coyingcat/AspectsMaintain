@@ -38,6 +38,15 @@
 
     // Hooking dealloc is delicate, only AspectPositionBefore will work here.
     [testController aspect_hookSelector:NSSelectorFromString(@"dealloc") withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> info) {
+        
+        // __strong strongSelf = self
+        // 他是局部变量，
+        // 存活在 block 块中
+        
+        
+        // block 执行完成
+        // strongSelf gg 了
+        // self -- 的引用计数，回归正常了
         NSLog(@"Controller is about to be deallocated: %@", [info instance]);
     } error:NULL];
     

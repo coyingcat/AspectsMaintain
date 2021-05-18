@@ -164,6 +164,9 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
     // 偏移量，
     // C 语言，访问结构体，通过首地址
     // 拿到结构体的成员变量，需要偏移量
+    
+    // 偏移，若干个，
+    // 成员变量指针的长度
 	void *desc = layout->descriptor;
 	desc += 2 * sizeof(unsigned long int);
     
@@ -805,6 +808,16 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 + (instancetype)identifierWithSelector:(SEL)selector object:(id)object options:(AspectOptions)options block:(id)block error:(NSError **)error {
     NSCParameterAssert(block);
     NSCParameterAssert(selector);
+    // 获取 block 的签名信息
+    
+    // 方法签名信息:  v @ { 返回值 } ( id self ) : ( sel 即 _cmd )
+    
+    
+    // block 签名信息:  v ? { 表明他是一个 block  }
+    
+    
+    // 签名信息的作用， 方法
+    
     NSMethodSignature *blockSignature = aspect_blockMethodSignature(block, error); // TODO: check signature compatibility, etc.
     if (!aspect_isCompatibleBlockSignature(blockSignature, object, selector, error)) {
         return nil;
