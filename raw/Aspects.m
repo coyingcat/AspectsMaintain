@@ -157,6 +157,13 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
         AspectError(AspectErrorMissingBlockSignature, description);
         return nil;
     }
+    // descriptor， 指针移动
+    
+    // block, 自动获取外界变量
+    
+    // 偏移量，
+    // C 语言，访问结构体，通过首地址
+    // 拿到结构体的成员变量，需要偏移量
 	void *desc = layout->descriptor;
 	desc += 2 * sizeof(unsigned long int);
     
@@ -170,8 +177,14 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
         return nil;
     }
 	const char *signature = (*(const char **)desc);
+    
+    // ???
+    // 消息，转发流程
 	return [NSMethodSignature signatureWithObjCTypes:signature];
 }
+
+
+
 
 static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature, id object, SEL selector, NSError **error) {
     NSCParameterAssert(blockSignature);

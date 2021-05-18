@@ -107,11 +107,25 @@ typedef struct _AspectBlock {
         unsigned long int reserved;
         unsigned long int size;
         // requires AspectBlockFlagsHasCopyDisposeHelpers
+        
+        // AspectBlockFlagsHasCopyDisposeHelpers 这个有值，
+        // 下面两个指针，也是有值的
         void (*copy)(void *dst, const void *src);
         void (*dispose)(const void *);
+        
+        
         // requires AspectBlockFlagsHasSignature
         const char *signature;
         const char *layout;
     } *descriptor;
     // imported variables
 } *AspectBlockRef;
+
+
+
+
+
+
+
+
+
