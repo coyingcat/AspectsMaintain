@@ -592,6 +592,18 @@ static NSMutableDictionary *aspect_getSwizzledClassesDict() {
     return swizzledClassesDict;
 }
 
+
+
+// 过滤 sel,
+
+// ARC 相关
+
+
+
+// dealloc 配合 after 策略选项，
+// 似乎没有意义
+
+
 static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, AspectOptions options, NSError **error) {
     static NSSet *disallowedSelectorList;
     static dispatch_once_t pred;
@@ -860,6 +872,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
         return nil;
     }
     // 通过校验后
+    // 赋值操作
     AspectIdentifier *identifier = nil;
     if (blockSignature) {
         
