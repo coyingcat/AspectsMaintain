@@ -404,28 +404,55 @@ static Class aspect_hookClass(NSObject *self, NSError **error) {
     }
 
     // Default case. Create dynamic subclass.
+    
+    // 动态生成了一个子类
+    
+    // KVO 的原理
 	const char *subclassName = [className stringByAppendingString:AspectsSubclassSuffix].UTF8String;
 	Class subclass = objc_getClass(subclassName);
 
 	if (subclass == nil) {
+        // 生成一个类
 		subclass = objc_allocateClassPair(baseClass, subclassName, 0);
 		if (subclass == nil) {
             NSString *errrorDesc = [NSString stringWithFormat:@"objc_allocateClassPair failed to allocate class %s.", subclassName];
             AspectError(AspectErrorFailedToAllocateClassPair, errrorDesc);
             return nil;
         }
-
+        // 修改类的指针
 		aspect_swizzleForwardInvocation(subclass);
 		aspect_hookedGetClass(subclass, statedClass);
 		aspect_hookedGetClass(object_getClass(subclass), statedClass);
+        // 注册类
 		objc_registerClassPair(subclass);
 	}
-
+    
 	object_setClass(self, subclass);
 	return subclass;
 }
 
 static NSString *const AspectsForwardInvocationSelectorName = @"__aspects_forwardInvocation:";
+
+
+
+
+//  建立绑定
+
+
+/*
+ 
+把当前类中的 SEL: ForwardInvocation 消息转发
+ 
+ 重新指定了，一个 IMP, aspect_swizzleForwardInvocation
+ 
+ 自定义的、动态产生的子类的 IMP
+ 
+ 
+ 
+ 
+ */
+
+
 static void aspect_swizzleForwardInvocation(Class klass) {
     NSCParameterAssert(klass);
     // If there is no method, replace will act like class_addMethod.
@@ -435,6 +462,9 @@ static void aspect_swizzleForwardInvocation(Class klass) {
     }
     AspectLog(@"Aspects: %@ is now aspect aware.", NSStringFromClass(klass));
 }
+
+
+
 
 static void aspect_undoSwizzleForwardInvocation(Class klass) {
     NSCParameterAssert(klass);
@@ -509,6 +539,8 @@ for (AspectIdentifier *aspect in aspects) {\
 }
 
 // This is the swizzled forwardInvocation: method.
+
+// 自定义的函数
 static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL selector, NSInvocation *invocation) {
     NSCParameterAssert(self);
     NSCParameterAssert(invocation);
