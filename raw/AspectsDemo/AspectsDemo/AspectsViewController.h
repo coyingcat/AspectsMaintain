@@ -45,7 +45,19 @@
 
 - (IBAction)buttonPressed:(id)sender;
 
+// imp ，
+
+// 是这个代码块，
+
+// 具体指向的地址空间
+
+// 即，函数指针
+
+
 @end
+
+
+
 
 
 

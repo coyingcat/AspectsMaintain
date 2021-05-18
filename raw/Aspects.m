@@ -859,9 +859,12 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
         
         return nil;
     }
-
+    // 通过校验后
     AspectIdentifier *identifier = nil;
     if (blockSignature) {
+        
+        // copy 操作，
+        // 复制操作
         identifier = [AspectIdentifier new];
         identifier.selector = selector;
         identifier.block = block;
