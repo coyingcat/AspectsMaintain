@@ -189,6 +189,16 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
 
 
 // 校验，传过来的方法，是不是 block
+
+
+
+// 校验， hook 的 sel, 与 block 的实现，完全一致，
+
+
+// 毕竟可以有个 instead 操作
+
+
+
 static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature, id object, SEL selector, NSError **error) {
     NSCParameterAssert(blockSignature);
     NSCParameterAssert(object);
@@ -197,8 +207,17 @@ static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature,
     BOOL signaturesMatch = YES;
     NSMethodSignature *methodSignature = [[object class] instanceMethodSignatureForSelector:selector];
     if (blockSignature.numberOfArguments > methodSignature.numberOfArguments) {
+        
+        // 不合理的情况
+        
+        
         signaturesMatch = NO;
-    }else {
+    }
+    else {
+        
+        // 合理的情况
+        
+        
         if (blockSignature.numberOfArguments > 1) {
             const char *blockType = [blockSignature getArgumentTypeAtIndex:1];
             if (blockType[0] != '@') {
@@ -208,6 +227,9 @@ static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature,
         // Argument 0 is self/block, argument 1 is SEL or id<AspectInfo>. We start comparing at argument 2.
         // The block can have less arguments than the method, that's ok.
         if (signaturesMatch) {
+            
+            // 现在从第 3 位，开始校验
+            // 0, 1, 2
             for (NSUInteger idx = 2; idx < blockSignature.numberOfArguments; idx++) {
                 const char *methodType = [methodSignature getArgumentTypeAtIndex:idx];
                 const char *blockType = [blockSignature getArgumentTypeAtIndex:idx];
