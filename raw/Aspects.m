@@ -197,7 +197,7 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
 
 // 毕竟可以有个 instead 操作
 
-
+// 校验，是不是，可替换的方法  (  相同的方法  )
 
 static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature, id object, SEL selector, NSError **error) {
     NSCParameterAssert(blockSignature);
@@ -219,6 +219,13 @@ static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature,
         
         
         if (blockSignature.numberOfArguments > 1) {
+            
+            //  @ < aspectInfo >
+            
+            // 0
+            
+            // 先判断，第一位
+            
             const char *blockType = [blockSignature getArgumentTypeAtIndex:1];
             if (blockType[0] != '@') {
                 signaturesMatch = NO;

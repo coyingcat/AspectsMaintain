@@ -29,9 +29,17 @@
 
 
 
+
+
+
+
 // 一个 Method,
 
-// 通过 sel 、 name 、 imp 确定
+// 通过 sel 、 name 、 imp ，
+
+// 和方法签名 signature
+
+// 确定
 
 
 
