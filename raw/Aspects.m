@@ -188,7 +188,7 @@ static NSMethodSignature *aspect_blockMethodSignature(id block, NSError **error)
 
 
 
-
+// 校验，传过来的方法，是不是 block
 static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature, id object, SEL selector, NSError **error) {
     NSCParameterAssert(blockSignature);
     NSCParameterAssert(object);
@@ -816,10 +816,18 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
     // block 签名信息:  v ? { 表明他是一个 block  }
     
     
-    // 签名信息的作用， 方法
+    // 签名信息的作用， 方法唯一性，方法的校验
+    
+    // 方法的校验，从方法签名的第二位，开始校验
+    
+    // 方法校验成功，找到合适的类型，才可以进行方法替换
     
     NSMethodSignature *blockSignature = aspect_blockMethodSignature(block, error); // TODO: check signature compatibility, etc.
     if (!aspect_isCompatibleBlockSignature(blockSignature, object, selector, error)) {
+        
+        // 传过来的，不是 block , 就凉了
+        
+        
         return nil;
     }
 
