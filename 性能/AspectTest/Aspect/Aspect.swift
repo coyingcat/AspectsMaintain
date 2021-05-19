@@ -32,7 +32,10 @@ let lock = SpinLock()
 
 private enum Constants {
     static let subclassSuffix = "_Aspect_"
-    static let forwardInvocationSelectorName = "__aspect_forwardInvocation:"
+    //  static let forwardInvocationSelectorName = "__aspect_forwardInvocation:"
+    
+    
+    static let forwardInvocationSelectorName = "__aspect_forward___qu___Invocation:"
 }
 
 public class AspectInfo: NSObject {
