@@ -332,7 +332,18 @@ static Class aspect_hookClass(NSObject *self, NSError **error) {
 	return subclass;
 }
 
-static NSString *const AspectsForwardInvocationSelectorName = @"__aspects_forwardInvocation:";
+
+
+//  反正，这个方法，没实现
+
+//  static NSString *const AspectsForwardInvocationSelectorName = @"__aspects_forwardInvocation:";
+
+//  好像这样也行
+
+static NSString *const AspectsForwardInvocationSelectorName = @"__aspects_forward__haha__Invocation:";
+
+
+
 static void aspect_swizzleForwardInvocation(Class klass) {
     NSCParameterAssert(klass);
     // If there is no method, replace will act like class_addMethod.
