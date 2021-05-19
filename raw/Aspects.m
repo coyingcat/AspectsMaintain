@@ -637,15 +637,7 @@ static NSMutableDictionary *aspect_getSwizzledClassesDict() {
 
 
 
-// 过滤 sel,
-
-// ARC 相关
-
-
-
-// dealloc 配合 after 策略选项，
-// 这个 Hook, 似乎没有意义
-
+// 过滤 sel
 
 static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, AspectOptions options, NSError **error) {
     static NSSet *disallowedSelectorList;
@@ -653,7 +645,9 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
     dispatch_once(&pred, ^{
         disallowedSelectorList = [NSSet setWithObjects:@"retain", @"release", @"autorelease", @"forwardInvocation:", nil];
     });
+    // 过滤 sel,
 
+    // ARC 相关
     // Check against the blacklist.
     NSString *selectorName = NSStringFromSelector(selector);
     if ([disallowedSelectorList containsObject:selectorName]) {
@@ -662,6 +656,9 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
         return NO;
     }
 
+    // dealloc 配合 after 策略选项，
+    // 这个 Hook, 似乎没有意义
+    
     // Additional checks.
     AspectOptions position = options&AspectPositionFilter;
     if ([selectorName isEqualToString:@"dealloc"] && position != AspectPositionBefore) {
