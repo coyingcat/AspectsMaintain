@@ -8,14 +8,14 @@
 import Foundation
 
 // Unavailable selectors in Swift.
-internal enum ObjCSelector {
+internal struct ObjCSelector {
     static let forwardInvocation = Selector((("forwardInvocation:")))
     static let methodSignatureForSelector = Selector((("methodSignatureForSelector:")))
     static let getClass = Selector((("class")))
 }
 
 // Method encoding of the unavailable selectors.
-internal enum ObjCMethodEncoding {
+internal struct ObjCMethodEncoding {
     static let forwardInvocation = extract("v@:@")
     static let methodSignatureForSelector = extract("v@::")
     static let getClass = extract("#@:")
