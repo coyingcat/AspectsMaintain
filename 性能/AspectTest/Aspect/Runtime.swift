@@ -28,6 +28,19 @@ internal enum ObjCMethodEncoding {
 internal let NSInvocation: AnyClass = NSClassFromString("NSInvocation")!
 internal let NSMethodSignature: AnyClass = NSClassFromString("NSMethodSignature")!
 
+
+
+
+
+
+
+// 把 runtime 的 hidden file,
+
+// 拎出来， public 化， 可以调用
+
+
+
+
 // Signatures defined in `@objc` protocols would be available for ObjC message, sending via `AnyObject`.
 @objc internal protocol ObjCClassReporting {
     // An alias for `-class`, which is unavailable in Swift.
@@ -37,6 +50,11 @@ internal let NSMethodSignature: AnyClass = NSClassFromString("NSMethodSignature"
     @objc(methodSignatureForSelector:)
     func objcMethodSignature(for selector: Selector) -> AnyObject
 }
+
+
+
+
+
 
 // Methods of `NSInvocation`.
 @objc internal protocol ObjCInvocation {
@@ -65,6 +83,9 @@ internal let NSMethodSignature: AnyClass = NSClassFromString("NSMethodSignature"
     static func invocation(methodSignature: AnyObject) -> AnyObject
 }
 
+
+
+
 // Methods of `NSMethodSignature`.
 @objc internal protocol ObjCMethodSignature {
     @objc(numberOfArguments)
@@ -76,6 +97,10 @@ internal let NSMethodSignature: AnyClass = NSClassFromString("NSMethodSignature"
     @objc(signatureWithObjCTypes:)
     static func signature(objCTypes: UnsafePointer<CChar>) -> AnyObject
 }
+
+
+
+
 
 /// Objective-C type encoding.
 ///
@@ -181,6 +206,10 @@ internal func unpackInvocation(_ invocation: AnyObject) -> [Any?] {
     return bridged
 }
 
+
+
+
+
 extension Selector {
 
     internal var utf8Start: UnsafePointer<Int8> {
@@ -211,6 +240,11 @@ extension Selector {
         return sel_registerName(cString)
     }
 }
+
+
+
+
+
 
 internal func checkTypeEncoding(_ types: UnsafePointer<CChar>) -> Bool {
     // Some types, including vector types, are not encoded. In these cases the
