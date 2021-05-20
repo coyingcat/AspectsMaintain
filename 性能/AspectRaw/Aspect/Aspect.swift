@@ -131,8 +131,6 @@ func ahook(object: AnyObject, selector: Selector, strategy: AspectStrategy, bloc
             let succeeds = class_addMethod(subclass, aliasSelector, impl, typeEncoding)
             precondition(succeeds, "Aspect attempts to swizzle a selector that has message forwarding enabled with a runtime injected implementation. This is unsupported in the current version.")
         }
-
-        class_addMethod(subclass, aliasSelector, impl, typeEncoding)
         class_replaceMethod(subclass, selector, _aspect_objc_msgForward, typeEncoding)
         return identifier
     }
