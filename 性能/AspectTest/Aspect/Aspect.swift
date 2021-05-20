@@ -132,6 +132,11 @@ func ahook(object: AnyObject, selector: Selector, block: AnyObject) throws -> As
     }
 }
 
+
+
+
+
+// Case three
 private func hookClass(object: AnyObject, selector: Selector) throws -> AnyClass {
     let perceivedClass: AnyClass = object.objcClass
     let realClass: AnyClass = object_getClass(object)!
@@ -173,6 +178,10 @@ private func hookClass(object: AnyObject, selector: Selector) throws -> AnyClass
     return nonnullSubclass
 }
 
+
+// Case two
+
+
 private func swizzleForwardInvocation(_ realClass: AnyClass) {
     guard let originalImplementation = class_replaceMethod(realClass,
                                                      ObjCSelector.forwardInvocation,
@@ -182,6 +191,9 @@ private func swizzleForwardInvocation(_ realClass: AnyClass) {
     }
     class_addMethod(realClass, NSSelectorFromString(Constants.forwardInvocationSelectorName), originalImplementation, ObjCMethodEncoding.forwardInvocation)
 }
+
+
+// Case One
 
 private let aspectForwardInvocation: @convention(block) (Unmanaged<NSObject>, AnyObject) -> Void = { objectRef, invocation in
     let object = objectRef.takeUnretainedValue() as AnyObject
