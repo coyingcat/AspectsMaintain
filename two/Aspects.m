@@ -292,6 +292,10 @@ static void aspect_prepareClassAndHookSelector(NSObject *self, SEL selector, NSE
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Hook Class
 
+
+// Case 3.2
+
+
 static Class aspect_hookClass(NSObject *self, NSError **error) {
     NSCParameterAssert(self);
 	Class statedClass = self.class;
@@ -304,9 +308,11 @@ static Class aspect_hookClass(NSObject *self, NSError **error) {
 
         // We swizzle a class object, not a single object.
 	}else if (class_isMetaClass(baseClass)) {
+        // case 3.1
         return aspect_swizzleClassInPlace((Class)self);
         // Probably a KVO'ed class. Swizzle in place. Also swizzle meta classes in place.
     }else if (statedClass != baseClass) {
+        // case 3.1
         return aspect_swizzleClassInPlace(baseClass);
     }
 
@@ -343,6 +349,8 @@ static Class aspect_hookClass(NSObject *self, NSError **error) {
 static NSString *const AspectsForwardInvocationSelectorName = @"__aspects_forward__haha__Invocation:";
 
 
+// Case two
+
 
 static void aspect_swizzleForwardInvocation(Class klass) {
     NSCParameterAssert(klass);
@@ -378,6 +386,8 @@ static void _aspect_modifySwizzledClasses(void (^block)(NSMutableSet *swizzledCl
     }
 }
 
+// Case 3.1
+
 static Class aspect_swizzleClassInPlace(Class klass) {
     NSCParameterAssert(klass);
     NSString *className = NSStringFromClass(klass);
@@ -401,6 +411,10 @@ for (AspectIdentifier *aspect in aspects) {\
 }
 
 // This is the swizzled forwardInvocation: method.
+
+
+// Case One
+
 static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL selector, NSInvocation *invocation) {
     NSCParameterAssert(self);
     NSCParameterAssert(invocation);
