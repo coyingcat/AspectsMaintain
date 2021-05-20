@@ -144,12 +144,12 @@ private func hookClass(object: AnyObject, selector: Selector) throws -> AnyClass
     if className.hasPrefix(Constants.subclassSuffix) {
         return realClass
     } else if class_isMetaClass(realClass) {
-        if class_getInstanceMethod(perceivedClass, selector) != nil {
-            swizzleForwardInvocation(perceivedClass)
-            return perceivedClass
-        } else {
+        if class_getInstanceMethod(perceivedClass, selector) == nil {
             swizzleForwardInvocation(realClass)
             return realClass
+        } else {
+            swizzleForwardInvocation(perceivedClass)
+            return perceivedClass
         }
     }
 
