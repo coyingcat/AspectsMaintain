@@ -184,7 +184,6 @@ private func swizzleForwardInvocation(_ realClass: AnyClass) {
                                                      ObjCMethodEncoding.forwardInvocation) else {
                                                         return
     }
-    class_addMethod(realClass, NSSelectorFromString(Constants.forwardInvocationSelectorName), originalImplementation, ObjCMethodEncoding.forwardInvocation)
 }
 
 private let aspectForwardInvocation: @convention(block) (Unmanaged<NSObject>, AnyObject) -> Void = { objectRef, invocation in
