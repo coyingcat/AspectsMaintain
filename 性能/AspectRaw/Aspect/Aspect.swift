@@ -31,7 +31,7 @@ let lock = SpinLock()
 //public func _as_objc_msgForward() -> IMP
 
 private enum Constants {
-    static let subclassSuffix = "_Aspect_"
+    static let subclassPrefix = "_Aspect_"
     static let forwardInvocationSelectorName = "__aspect_forwardInvocation:"
 }
 
@@ -141,7 +141,7 @@ private func hookClass(object: AnyObject, selector: Selector) throws -> AnyClass
     let realClass: AnyClass = object_getClass(object)!
     let className = String(cString: class_getName(realClass))
 
-    if className.hasPrefix(Constants.subclassSuffix) {
+    if className.hasPrefix(Constants.subclassPrefix) {
         return realClass
     } else if class_isMetaClass(realClass) {
         if class_getInstanceMethod(perceivedClass, selector) == nil {
@@ -153,7 +153,7 @@ private func hookClass(object: AnyObject, selector: Selector) throws -> AnyClass
         }
     }
 
-    let subclassName = Constants.subclassSuffix+className
+    let subclassName = Constants.subclassPrefix+className
     let subclass: AnyClass? = subclassName.withCString { cString in
         if let existingClass = objc_getClass(cString) as! AnyClass? {
             return existingClass
