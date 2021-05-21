@@ -10,6 +10,8 @@ import UIKit
 
 import Aspect
 
+var cnt = 1
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -18,19 +20,31 @@ class ViewController: UIViewController {
         
         
         
-
-        _ = try? hook(selector: #selector(ViewController.test(id:name:)), strategy: .before) { (_, id: Int, name: String) in
-            print("ha ha ha")
+            _ = try? hook(selector: #selector(ViewController.test(id:name:)), strategy: .before) { (_, id: Int, name: String) in
+                print("ViewController.test(id:name:))")
+            
         }
-
-
-        
     }
     
     
 
     @objc dynamic func test(id: Int, name: String) {
-        print("come on")
+        print(#function,  #file)
+        let ctrl = ViewControllerTwo()
+        present(ctrl, animated: true) {
+        }
+        if cnt == 1{
+            _ = try? ctrl.hook(selector: #selector(ViewControllerTwo.viewWillAppear(_:)), strategy: .before){ (_, ok: Bool) in
+                print("ViewControllerTwo.viewWillAppear(_:)")
+            }
+            
+            
+            _ = try? ctrl.hook(selector: #selector(ViewControllerTwo.test(id:name:)), strategy: .before){ (_, id: Int, name: String) in
+                print("ViewControllerTwo.test(id:name:) ")
+            }
+            cnt = 2
+        }
+        
     }
     
     
