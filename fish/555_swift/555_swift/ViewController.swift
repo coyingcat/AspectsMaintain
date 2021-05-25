@@ -12,6 +12,7 @@ typealias NewPrintf = @convention(thin) (String, Any...) -> Void
 
 func newPrinf(str: String, arg: Any...) -> Void {
     string = "test success"
+    print(string + "\n\n")
 }
 
 public func fishhookPrint(newMethod: UnsafeMutableRawPointer) {
@@ -32,7 +33,7 @@ class ViewController: UIViewController {
         
         fishhookPrint(newMethod: unsafeBitCast(newPrinf as NewPrintf, to: UnsafeMutableRawPointer.self))
 
-        Test.print(withStr: "Hello World")
+        Test.print(withStr: "Hello World \n\n\n")
     }
 
 
