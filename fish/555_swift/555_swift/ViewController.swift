@@ -17,6 +17,8 @@ func newPrinf(str: String, arg: Any...) -> Void {
 
 public func fishhookPrint(newMethod: UnsafeMutableRawPointer) {
     var oldMethod: UnsafeMutableRawPointer?
+    
+    // 把 printf， 打没了
     rebindSymbol("printf", replacement: newMethod, replaced: &oldMethod)
 }
 
