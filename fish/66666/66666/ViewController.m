@@ -30,7 +30,7 @@ void myNSLog(NSString *format, ...){
 
 
 
-@interface ViewController ()
+@interface ViewController()
 
 @end
 
@@ -67,11 +67,20 @@ struct rebinding {
     
     
     
+    
+    
+    
+    
     // 要交换的，原始的函数地址，放在哪里呢
     // 也就是例子中， 系统的 NSLog 的原始实现
     
-    //保存， 原始函数地址的， 变量的指针
+    // 保存， 原始函数地址的， 变量的指针
     nslogBind.replaced = (void *)&old_nslog;
+    
+    
+    
+    
+    
     
     
     

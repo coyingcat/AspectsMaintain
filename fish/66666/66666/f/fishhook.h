@@ -46,11 +46,28 @@ extern "C" {
 // 记录信息,
 // 告诉要交换的，是哪两个
 
+
 struct rebinding {
+    
+    
   const char *name;      // 需要 hook 的函数名， C 字符串
+  
+    
   void *replacement;     // 新函数的地址
-  void **replaced;       // 原始函数地址的指针
+    
+    
+    
+    
+  void **replaced;       // 原始函数地址的指针，
+    // 保存一下，可能以后要用
 };
+
+
+
+
+
+
+
 
 /*
  * For each rebinding in rebindings, rebinds references to external, indirect
