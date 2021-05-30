@@ -17,16 +17,7 @@
 
 //  函数指针,用来保存
 //  原始的函数的地址
-static void (*old_nslog)(NSString *format, ...);
-
-
-
-//新的 NSLog
-void myNSLog(NSString *format, ...){
-    format = [format stringByAppendingString:@"\n勾上了!"];
-    //再调用原来的  NSLog
-    old_nslog(format);
-}
+static void (* funcP)(const char * );
 
 
 
@@ -47,6 +38,22 @@ void myNSLog(NSString *format, ...){
 
 @implementation ViewController
 
+
+
+
+
+
+void func(const char * str){
+    printf("%s", str);
+}
+
+
+
+
+
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"123");
@@ -58,9 +65,9 @@ struct rebinding {
   void **replaced;//保存原始函数指针变量的指针(它是一个二级指针!)
 };
 */
-    struct rebinding nslogBind;
+    struct rebinding refunc;
     //函数的名称
-    nslogBind.name = "NSLog";       // C 字符串， 要交换的是
+    refunc.name = "func";       // C 字符串， 要交换的是
     
     
     
@@ -68,7 +75,7 @@ struct rebinding {
     
     //新的函数地址
     // 函数名称，就是函数地址
-    nslogBind.replacement = myNSLog;    //  交换为，新的函数的地址
+    refunc.replacement = newFunc;    //  交换为，新的函数的地址
     
     
     
@@ -82,7 +89,7 @@ struct rebinding {
     // 也就是例子中， 系统的 NSLog 的原始实现
     
     // 保存， 原始函数地址的， 变量的指针
-    nslogBind.replaced = (void *)&old_nslog;   // 要给这个指针， 的地址
+    refunc.replaced = (void *)&funcP;   // 要给这个指针， 的地址
     // 都是 C 函数
     // C 函数，都是值传递
     
@@ -109,7 +116,7 @@ struct rebinding {
     
     
     //定义数组
-    struct rebinding rebs[1] = {nslogBind};
+    struct rebinding rebs[1] = {refunc};
     
     
     /*
@@ -126,8 +133,28 @@ struct rebinding {
 }
 
 
+
+
+
+
+
+void newFunc(const char * str){
+    printf("勾上了，来一个");
+}
+
+
+
+
+
+
+
+
+
+
+
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"点击了屏幕!!");
+    func("点击了屏幕!!");
 }
 
 
