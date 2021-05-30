@@ -88,6 +88,10 @@ struct rebinding {
 
 
 
+
+// 因为加载的时候， dyld 做了一件事情，绑定符号
+
+
 FISHHOOK_VISIBILITY
 int rebind_symbols(struct rebinding rebindings[], size_t rebindings_nel);
 
