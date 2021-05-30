@@ -75,7 +75,24 @@ struct rebinding {
     // 也就是例子中， 系统的 NSLog 的原始实现
     
     // 保存， 原始函数地址的， 变量的指针
-    nslogBind.replaced = (void *)&old_nslog;
+    nslogBind.replaced = (void *)&old_nslog;   // 要给这个指针， 的地址
+    // 都是 C 函数
+    // C 函数，都是值传递
+    
+    
+    //  给这个指针， 的值 old_nslog
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
