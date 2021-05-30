@@ -12,10 +12,15 @@
 
 
 
-//函数指针,用保存原始的函数的地址
+// ---   用例:  更改系统的 NSLog 函数   ---
+
+
+// 函数指针,用来保存  原始的函数的地址
 static void (*old_nslog)(NSString *format, ...);
 
-//新的NSLog
+
+
+//新的 NSLog
 void myNSLog(NSString *format, ...){
     format = [format stringByAppendingString:@"\n勾上了!"];
     //再调用原来的
