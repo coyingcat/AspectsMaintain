@@ -8,8 +8,18 @@
 
 
 
+
 ![fish hook](https://github.com/coyingcat/AspectsMaintain/blob/master/imgs/0.png?raw=true)
 
+
+
+
+> C 语言，动态的特性，就是绑定符号
+
+
+
+//  自定义函数没有，该动态特性
+//  因为我们不需要绑定
 
 
 

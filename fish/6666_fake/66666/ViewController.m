@@ -23,7 +23,8 @@ static void (* funcP)(const char * );
 
 
 //  自己写的 C 函数， fish hook 是 hook 不了的
-
+//  自定义函数没有，该特性
+//  因为我们不需要绑定
 
 
 @interface ViewController()
