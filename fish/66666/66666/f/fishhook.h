@@ -42,7 +42,10 @@ extern "C" {
  * name to its replacement
  */
 
-// 记录信息
+
+// 记录信息,
+// 告诉要交换的，是哪两个
+
 struct rebinding {
   const char *name;      // 需要 hook 的函数名， C 字符串
   void *replacement;     // 新函数的地址

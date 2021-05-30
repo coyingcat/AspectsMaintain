@@ -53,11 +53,28 @@ struct rebinding {
 */
     struct rebinding nslogBind;
     //函数的名称
-    nslogBind.name = "NSLog";
+    nslogBind.name = "NSLog";       // C 字符串， 要交换的是
+    
+    
+    
+    
+    
     //新的函数地址
-    nslogBind.replacement = myNSLog;
-    //保存原始函数地址的变量的指针
+    // 函数名称，就是函数地址
+    nslogBind.replacement = myNSLog;    //  交换为，新的函数的地址
+    
+    
+    
+    
+    
+    // 要交换的，原始的函数地址，放在哪里呢
+    // 也就是例子中， 系统的 NSLog 的原始实现
+    
+    //保存， 原始函数地址的， 变量的指针
     nslogBind.replaced = (void *)&old_nslog;
+    
+    
+    
     //定义数组
     struct rebinding rebs[1] = {nslogBind};
     
