@@ -41,10 +41,12 @@ extern "C" {
  * A structure representing a particular intended rebinding from a symbol
  * name to its replacement
  */
+
+// 记录信息
 struct rebinding {
-  const char *name;
-  void *replacement;
-  void **replaced;
+  const char *name;      // 需要 hook 的函数名， C 字符串
+  void *replacement;     // 新函数的地址
+  void **replaced;       // 原始函数地址的指针
 };
 
 /*

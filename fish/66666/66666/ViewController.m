@@ -15,7 +15,8 @@
 // ---   用例:  更改系统的 NSLog 函数   ---
 
 
-// 函数指针,用来保存  原始的函数的地址
+//  函数指针,用来保存
+//  原始的函数的地址
 static void (*old_nslog)(NSString *format, ...);
 
 
@@ -23,7 +24,7 @@ static void (*old_nslog)(NSString *format, ...);
 //新的 NSLog
 void myNSLog(NSString *format, ...){
     format = [format stringByAppendingString:@"\n勾上了!"];
-    //再调用原来的
+    //再调用原来的  NSLog
     old_nslog(format);
 }
 
@@ -58,9 +59,17 @@ struct rebinding {
     //保存原始函数地址的变量的指针
     nslogBind.replaced = (void *)&old_nslog;
     //定义数组
-    struct rebinding rebs[] = {nslogBind};
+    struct rebinding rebs[1] = {nslogBind};
+    
+    
     /*
-     arg1 : 存放rebinding结构体的数组
+     
+     用于重新绑定符号
+     
+     arg1 : 存放 rebinding 结构体的数组
+     
+     
+     
      arg2 : 数组的长度
      */
     rebind_symbols(rebs, 1);
