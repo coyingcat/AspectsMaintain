@@ -23,6 +23,38 @@
 
 #include "fishhook.h"
 
+
+
+
+
+// C 语言，静态的，
+// 编译的时候，
+// 就决定了方法符号和函数地址的对应关系
+
+
+
+
+
+// 开发写的代码
+// 编译后，就变成了函数的地址
+// 函数的地址，存放在二进制文件中
+
+
+
+
+// fish hook 的原理，是修改二进制
+
+
+
+
+
+
+
+
+
+
+
+
 #include <dlfcn.h>
 #include <stdbool.h>
 #include <stdlib.h>
