@@ -43,6 +43,17 @@ void myNSLog(NSString *format, ...){
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"123");
+    [self change];
+    
+    NSLog(@"修改完毕了");
+    
+    
+}
+
+
+
+
+- (void) change{
     //定义rebinding结构体
 /*
 struct rebinding {
@@ -116,10 +127,6 @@ struct rebinding {
      arg2 : 数组的长度
      */
     rebind_symbols(rebs, 1);
-    
-    NSLog(@"修改完毕了");
-    
-    
 }
 
 
