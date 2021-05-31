@@ -71,6 +71,16 @@ struct rebinding {
     refunc.name = "func";       // C 字符串， 要交换的是
     
     
+    // 编译之后， func 就变成了地址
+    // func 就不存在了
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

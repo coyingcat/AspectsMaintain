@@ -159,10 +159,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				26E0F4DE265C885F005103FA /* ViewController.m in Sources */,
-				26E0F4F3265C88AA005103FA /* fishhook.c in Sources */,
 				26E0F4D8265C885F005103FA /* AppDelegate.m in Sources */,
 				26E0F4E9265C8860005103FA /* main.m in Sources */,
 				26E0F4DB265C885F005103FA /* SceneDelegate.m in Sources */,
+				26E0F4F3265C88AA005103FA /* fishhook.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
