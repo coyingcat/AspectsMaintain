@@ -12,6 +12,13 @@ typealias NewPrintf = @convention(thin) (String, Any...) -> Void
 
 func newPrinf(str: String, arg: Any...) -> Void {
     print("test success\n\n")
+    if let old = oldMethod{
+        let thin = unsafeBitCast(
+            old, to: NewPrintf.self)
+        thin("来来来")
+    }
+    
+    
 }
 
 
