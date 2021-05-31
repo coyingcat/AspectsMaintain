@@ -3,16 +3,7 @@
 
 
 
-### fish hook swift， 错误真多
+### fish hook swift， 调用惯例错误
 
-
-
-
-
-* 保存的指针，为空
-
-
-
-* 调用惯例
 
 @convention(thin) ， 把参数打没了
