@@ -104,9 +104,9 @@ func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
             let segname = String(cString: &curSegCmd.pointee.segname, maxLength: 16)
             if segname == SEG_DATA {
                 for j in 0..<curSegCmd.pointee.nsects {
-                    let cur = UnsafeRawPointer(curSegCmd).advanced(by: MemoryLayout<segment_command_64>.size + MemoryLayout<section_64>.size*Int(j))
+                    let cur = UnsafeRawPointer(curSegCmd).advanced(by: MemoryLayout<segment_command_64>.size + Int(j))
                     
-                    
+                    // 看错了，不是乘法，是强转
                     // let cur = UnsafeRawPointer(curSegCmd).advanced(by: MemoryLayout<segment_command_64>.size * MemoryLayout<section_64>.size + Int(j))
                     
                     let section = UnsafeMutableRawPointer(mutating: cur).assumingMemoryBound(to: section_64.self)
