@@ -131,6 +131,7 @@ struct rebinding {
 
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    //  [self change];                // 非常的动态
     NSLog(@"点击了屏幕!!");
 }
 
