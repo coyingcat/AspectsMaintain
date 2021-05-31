@@ -60,6 +60,18 @@ public func _rebindSymbol(_ rebinding: Rebinding) {
     }
 }
 
+
+
+/*
+ 进行 hook
+
+ 主要从 Macho-O 文件中找到对应的懒加载符号段、非懒加载符号端、符号表、动态符号表和字符串表
+
+ 因为苹果的设计，不能直接得到需要的内容，只能沿着相应的路径一步步寻找，得到想要的值。
+
+ 查表比较繁琐
+ 
+ */
 func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
     guard let mh = mh else { return }
     // 定义几个变量，从 MachO 里面找
@@ -107,7 +119,8 @@ func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
     guard let _symtab = symtab, let _strtab = strtab, let _indirectSymtab = indirectSymtab else {
         return
     }
-    // 重置回到 loadCommand 开始的位置
+    // 重置 cur,
+    // 回到 loadCommand 开始的位置
     cur = UnsafeRawPointer(mh).advanced(by: MemoryLayout<mach_header_64>.stride)
     for _: UInt32 in 0 ..< mh.pointee.ncmds {
         curSegCmd = UnsafeMutableRawPointer(mutating: cur).assumingMemoryBound(to: segment_command_64.self)
@@ -116,7 +129,9 @@ func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
         if curSegCmd.pointee.cmd == LC_SEGMENT_64 {
             let segname = String(cString: &curSegCmd.pointee.segname, maxLength: 16)
             if segname == SEG_DATA {
+                // 寻找到 data 段
                 for j in 0..<curSegCmd.pointee.nsects {
+                    // 遍历每一个 section header
                     let cur = UnsafeRawPointer(curSegCmd).advanced(by: MemoryLayout<segment_command_64>.size + Int(j))
                     
                     // 看错了，不是乘法，是强转
@@ -124,6 +139,8 @@ func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
                     
                     let section = UnsafeMutableRawPointer(mutating: cur).assumingMemoryBound(to: section_64.self)
                     if section.pointee.flags == S_LAZY_SYMBOL_POINTERS || section.pointee.flags == S_NON_LAZY_SYMBOL_POINTERS {
+                        // 找懒加载表
+                        // 和非懒加载表
                         performRebindingWithSection(section, slide: slide, symtab: _symtab, strtab: _strtab, indirectSymtab: _indirectSymtab)
                     }
                 }
