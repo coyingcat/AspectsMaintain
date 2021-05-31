@@ -162,7 +162,7 @@ func performRebindingWithSection(_ section: UnsafeMutablePointer<section_64>,
         return
     }
     //   nl_symbol_ptr ( 加载表 ) 和 la_symbol_ptr  （ 懒加载表 ）section 中的 reserved1 字段,
-    //   指明对应的 indirect symbol table 起始的 index
+    //   表示对应的 indirect symbol table 起始的 index
     let indirectSymbolIndices = indirectSymtab.advanced(by: Int(section.pointee.reserved1))
     
     
@@ -185,17 +185,22 @@ func performRebindingWithSection(_ section: UnsafeMutablePointer<section_64>,
         }
         // 以 symtab_index 作为下标，访问 symbol table
         let strtabOffset = symtab.advanced(by: Int(symtabIndex.pointee)).pointee.n_un.n_strx
+        // 获取符号名 symbol_name
         let symbolName = strtab.advanced(by: Int(strtabOffset))
 
         var isEqual = true
         for i in 0..<symbolBytes.count {
             if symbolBytes[i] != symbolName.advanced(by: i+1).pointee {
+                //  判断旧方法名，和符号名不一致
                 isEqual = false
             }
         }
 
         if isEqual {
+            // 保存的旧函数的实现，有了
+            // 这里赋值，成功了
             rebinding.replaced = _indirectSymbolBindings.advanced(by: i).pointee
+            // 新函数，交换好了
             _indirectSymbolBindings.advanced(by: i).initialize(to: rebinding.replacement)
         }
     }
