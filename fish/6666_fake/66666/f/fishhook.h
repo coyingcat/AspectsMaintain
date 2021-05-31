@@ -91,27 +91,9 @@ struct rebinding {
 FISHHOOK_VISIBILITY
 int rebind_symbols(struct rebinding rebindings[], size_t rebindings_nel);
 
-/*
- * Rebinds as above, but only in the specified image. The header should point
- * to the mach-o header, the slide should be the slide offset. Others as above.
- */
 
 
 
-
-
-
-
-// image ， 模块
-// 哪个库的符号
-
-
-
-FISHHOOK_VISIBILITY
-int rebind_symbols_image(void *header,
-                         intptr_t slide,
-                         struct rebinding rebindings[],
-                         size_t rebindings_nel);
 
 #ifdef __cplusplus
 }
