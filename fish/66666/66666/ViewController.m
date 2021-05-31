@@ -44,6 +44,7 @@ void myNSLog(NSString *format, ...){
     [super viewDidLoad];
     NSLog(@"123");
     [self change];
+    //   0xC000
     
     NSLog(@"修改完毕了");
     
@@ -137,6 +138,7 @@ struct rebinding {
 
 
 @end
+
 
 
 
