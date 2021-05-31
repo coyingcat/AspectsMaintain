@@ -46,10 +46,12 @@ public func rebindSymbol(_ name: String, replacement: UnsafeMutableRawPointer, r
 }
 
 public func _rebindSymbol(_ rebinding: Rebinding) {
-    currentRebinding = rebinding
+    
     if currentRebinding == nil {
+        currentRebinding = rebinding
         _dyld_register_func_for_add_image(rebindSymbolForImage)
     } else {
+        currentRebinding = rebinding
         for i in 0..<_dyld_image_count() {
             rebindSymbolForImage(_dyld_get_image_header(i), _dyld_get_image_vmaddr_slide(i))
         }
