@@ -43,6 +43,7 @@ private var currentRebinding: Rebinding? = nil
 public func rebindSymbol(_ name: String, replacement: UnsafeMutableRawPointer, replaced: inout UnsafeMutableRawPointer?) {
     let rebinding = Rebinding(name, replacement: replacement, replaced: &replaced)
     _rebindSymbol(rebinding)
+    replaced = currentRebinding?.replaced
 }
 
 public func _rebindSymbol(_ rebinding: Rebinding) {
@@ -199,7 +200,7 @@ func performRebindingWithSection(_ section: UnsafeMutablePointer<section_64>,
         if isEqual {
             // 保存的旧函数的实现，有了
             // 这里赋值，成功了
-            rebinding.replaced = _indirectSymbolBindings.advanced(by: i).pointee
+            currentRebinding?.replaced = _indirectSymbolBindings.advanced(by: i).pointee
             // 新函数，交换好了
             _indirectSymbolBindings.advanced(by: i).initialize(to: rebinding.replacement)
         }

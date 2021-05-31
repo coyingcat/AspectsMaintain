@@ -15,7 +15,7 @@ func newPrinf(str: String, arg: Any...) -> Void {
     if let old = oldMethod{
         let thin = unsafeBitCast(
             old, to: NewPrintf.self)
-        thin("来来来")
+        print(thin)
     }
     
     
