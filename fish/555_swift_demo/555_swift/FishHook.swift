@@ -65,7 +65,7 @@ public func _rebindSymbol(_ rebinding: Rebinding) {
 /*
  进行 hook
 
- 主要从 Macho-O 文件中找到对应的懒加载符号段、非懒加载符号端、符号表、动态符号表和字符串表
+ 主要从 Macho-O 文件中找到对应的懒加载符号段、非懒加载符号段、符号表、动态符号表和字符串表
 
  因为苹果的设计，不能直接得到需要的内容，只能沿着相应的路径一步步寻找，得到想要的值。
 
@@ -161,20 +161,29 @@ func performRebindingWithSection(_ section: UnsafeMutablePointer<section_64>,
     guard var rebinding = currentRebinding, let symbolBytes = rebinding.name.data(using: String.Encoding.utf8)?.map({ $0 }) else {
         return
     }
-
+    //   nl_symbol_ptr ( 加载表 ) 和 la_symbol_ptr  （ 懒加载表 ）section 中的 reserved1 字段,
+    //   指明对应的 indirect symbol table 起始的 index
     let indirectSymbolIndices = indirectSymtab.advanced(by: Int(section.pointee.reserved1))
+    
+    
+    //  slide + section->addr ，  就是
+    // 符号对应的函数实现的数组，
+    // 即找到了相应的 __nl_symbol_ptr 和 __la_symbol_ptr 表里面的函数指针，可去找函数的地址
     let indirectSymbolBindings = UnsafeMutablePointer<UnsafeMutableRawPointer>(bitPattern: slide+Int(section.pointee.addr))
 
     guard let _indirectSymbolBindings = indirectSymbolBindings else {
         return
     }
-
+    // 遍历 section 里面的每一个符号
     for i in 0..<Int(section.pointee.size)/MemoryLayout<UnsafeMutableRawPointer>.size {
+        //  找到符号在 Indrect Symbol Table 表的值
+        //  读取 indirect table 的数据，得到符号在 DATA 段中 section 的位置 （ 适用于懒加载表，和非懒加载表）
+        
         let symtabIndex = indirectSymbolIndices.advanced(by: i)
         if symtabIndex.pointee == INDIRECT_SYMBOL_ABS || symtabIndex.pointee == INDIRECT_SYMBOL_LOCAL {
             continue;
         }
-
+        // 以 symtab_index 作为下标，访问 symbol table
         let strtabOffset = symtab.advanced(by: Int(symtabIndex.pointee)).pointee.n_un.n_strx
         let symbolName = strtab.advanced(by: Int(strtabOffset))
 
