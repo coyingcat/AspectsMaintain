@@ -46,12 +46,14 @@ public func rebindSymbol(_ name: String, replacement: UnsafeMutableRawPointer, r
 }
 
 public func _rebindSymbol(_ rebinding: Rebinding) {
-    
+    // 判断是不是,第一次调用
     if currentRebinding == nil {
         currentRebinding = rebinding
+        // 第一次调用需要注册, dyld 关于镜像文件的回调
         _dyld_register_func_for_add_image(rebindSymbolForImage)
     } else {
         currentRebinding = rebinding
+        // 遍历已经加载的 image, 进行 hook
         for i in 0..<_dyld_image_count() {
             rebindSymbolForImage(_dyld_get_image_header(i), _dyld_get_image_vmaddr_slide(i))
         }
@@ -60,14 +62,17 @@ public func _rebindSymbol(_ rebinding: Rebinding) {
 
 func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
     guard let mh = mh else { return }
-
+    // 定义几个变量，从 MachO 里面找
     var curSegCmd: UnsafeMutablePointer<segment_command_64>!
     var linkeditSegment: UnsafeMutablePointer<segment_command_64>!
     var symtabCmd: UnsafeMutablePointer<symtab_command>!
     var dysymtabCmd: UnsafeMutablePointer<dysymtab_command>!
-
+    // cur 是一个指针，存放的地址 = pageZero + ASLR的值 + mach_header_64 的大小，
+    // 可得 Load Commands 的地址
     var cur = UnsafeRawPointer(mh).advanced(by: MemoryLayout<mach_header_64>.stride)
-
+    // 遍历 commands ,
+    // 确定 linkedit、symtab、dysymtab
+    // 这几个 command 的位置
     for _: UInt32 in 0 ..< mh.pointee.ncmds {
         curSegCmd = UnsafeMutableRawPointer(mutating: cur).assumingMemoryBound(to: segment_command_64.self)
         cur = UnsafeRawPointer(cur).advanced(by: Int(curSegCmd.pointee.cmdsize))
@@ -83,20 +88,26 @@ func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
             dysymtabCmd = UnsafeMutableRawPointer(mutating: curSegCmd).assumingMemoryBound(to: dysymtab_command.self)
         }
     }
-
+    // 刚才获取的，有一项为空, 直接返回
     guard linkeditSegment != nil, symtabCmd != nil, dysymtabCmd != nil else {
         return
     }
-
+    // 链接时程序的基址 = __LINKEDIT.VM_Address + silde的改变值 -__LINKEDIT.File_Offset
     let linkeditBase = slide + Int(linkeditSegment.pointee.vmaddr) - Int(linkeditSegment.pointee.fileoff)
+    
+    // 符号表的地址 = 基址 + 符号表偏移量
     let symtab = UnsafeMutablePointer<nlist_64>(bitPattern: linkeditBase + Int(symtabCmd.pointee.symoff))
+    
+    // 字符串表的地址 = 基址 + 字符串表偏移量
     let strtab = UnsafeMutablePointer<UInt8>(bitPattern: linkeditBase + Int(symtabCmd.pointee.stroff))
+    
+    // 动态符号表地址 = 基址 + 动态符号表偏移量
     let indirectSymtab = UnsafeMutablePointer<UInt32>(bitPattern: linkeditBase + Int(dysymtabCmd.pointee.indirectsymoff))
 
     guard let _symtab = symtab, let _strtab = strtab, let _indirectSymtab = indirectSymtab else {
         return
     }
-
+    // 重置回到 loadCommand 开始的位置
     cur = UnsafeRawPointer(mh).advanced(by: MemoryLayout<mach_header_64>.stride)
     for _: UInt32 in 0 ..< mh.pointee.ncmds {
         curSegCmd = UnsafeMutableRawPointer(mutating: cur).assumingMemoryBound(to: segment_command_64.self)
