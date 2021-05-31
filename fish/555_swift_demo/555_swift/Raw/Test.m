@@ -12,8 +12,7 @@
 @implementation Test
 
 + (void)printWithStr:(NSString *)str {
-    const char *str2 = [str UTF8String];
-    printf("%s", str2);
+    NSLog(@"%@", str);
 }
 
 @end
