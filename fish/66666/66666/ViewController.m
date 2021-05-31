@@ -116,6 +116,10 @@ struct rebinding {
      arg2 : 数组的长度
      */
     rebind_symbols(rebs, 1);
+    
+    NSLog(@"修改完毕了");
+    
+    
 }
 
 
@@ -125,6 +129,8 @@ struct rebinding {
 
 
 @end
+
+
 
 
 
