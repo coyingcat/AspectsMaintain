@@ -105,6 +105,10 @@ func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
             if segname == SEG_DATA {
                 for j in 0..<curSegCmd.pointee.nsects {
                     let cur = UnsafeRawPointer(curSegCmd).advanced(by: MemoryLayout<segment_command_64>.size + MemoryLayout<section_64>.size*Int(j))
+                    
+                    
+                    // let cur = UnsafeRawPointer(curSegCmd).advanced(by: MemoryLayout<segment_command_64>.size * MemoryLayout<section_64>.size + Int(j))
+                    
                     let section = UnsafeMutableRawPointer(mutating: cur).assumingMemoryBound(to: section_64.self)
                     if section.pointee.flags == S_LAZY_SYMBOL_POINTERS || section.pointee.flags == S_NON_LAZY_SYMBOL_POINTERS {
                         performRebindingWithSection(section, slide: slide, symtab: _symtab, strtab: _strtab, indirectSymtab: _indirectSymtab)
@@ -114,6 +118,10 @@ func rebindSymbolForImage(_ mh: UnsafePointer<mach_header>?, _ slide:Int) {
         }
     }
 }
+
+
+
+
 
 func performRebindingWithSection(_ section: UnsafeMutablePointer<section_64>,
                                  slide: Int,
