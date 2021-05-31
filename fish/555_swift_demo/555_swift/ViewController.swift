@@ -12,18 +12,22 @@ typealias NewPrintf = @convention(thin) (String, Any...) -> Void
 
 func newPrinf(str: String, arg: Any...) -> Void {
     string = "test success"
-    print(string + "\n\n")
+    print(string + "\n\n" + str)
+    
+    
 }
 
 
 var string = ""
 
 
+var oldMethod: UnsafeMutableRawPointer?
+
 
 class ViewController: UIViewController {
 
     
-    var oldMethod: UnsafeMutableRawPointer?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,7 @@ class ViewController: UIViewController {
         
         rebindSymbol("printf", replacement: unsafeBitCast(newPrinf as NewPrintf, to: UnsafeMutableRawPointer.self), replaced: &oldMethod)
 
+        
         Test.print(withStr: "Hello World \n\n\n")
     }
 
