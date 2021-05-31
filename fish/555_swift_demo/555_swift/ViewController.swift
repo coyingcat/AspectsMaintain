@@ -15,12 +15,6 @@ func newPrinf(str: String, arg: Any...) -> Void {
     print(string + "\n\n")
 }
 
-public func fishhookPrint(newMethod: UnsafeMutableRawPointer) {
-    var oldMethod: UnsafeMutableRawPointer?
-    
-    // 把 printf， 打没了
-    rebindSymbol("printf", replacement: newMethod, replaced: &oldMethod)
-}
 
 var string = ""
 
@@ -28,12 +22,15 @@ var string = ""
 
 class ViewController: UIViewController {
 
+    
+    var oldMethod: UnsafeMutableRawPointer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         
-        fishhookPrint(newMethod: unsafeBitCast(newPrinf as NewPrintf, to: UnsafeMutableRawPointer.self))
+        rebindSymbol("printf", replacement: unsafeBitCast(newPrinf as NewPrintf, to: UnsafeMutableRawPointer.self), replaced: &oldMethod)
 
         Test.print(withStr: "Hello World \n\n\n")
     }
