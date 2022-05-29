@@ -205,6 +205,9 @@
 				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "PSPDFKit GmbH";
 				TargetAttributes = {
+					78573EF019155A2E000D3B00 = {
+						DevelopmentTeam = 5DK8BU3ZUW;
+					};
 					78573F0B19155A2E000D3B00 = {
 						TestTargetID = 78573EF019155A2E000D3B00;
 					};
@@ -442,6 +445,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 5DK8BU3ZUW;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AspectsDemo/AspectsDemo-Prefix.pch";
 				INFOPLIST_FILE = "AspectsDemo/AspectsDemo-Info.plist";
@@ -456,6 +460,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 5DK8BU3ZUW;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AspectsDemo/AspectsDemo-Prefix.pch";
 				INFOPLIST_FILE = "AspectsDemo/AspectsDemo-Info.plist";

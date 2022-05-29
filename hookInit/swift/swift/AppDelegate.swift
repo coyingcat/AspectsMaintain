@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  555_swift
+//  swift
 //
-//  Created by Jz D on 2021/5/25.
+//  Created by Jz D on 2022/5/29.
 //
 
 import UIKit
@@ -14,8 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        Test.print(withStr: " haha  \n\n\n")
         return true
     }
 
